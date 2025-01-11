@@ -30,3 +30,22 @@ app.post("/api/sessions", authMiddleware, async (req, res) => {
     res.status(200).json(session);
   });
   
+
+  app.get("/api/analytics", authMiddleware, async (req, res) => {
+    if (req.user.role !== "coach") {
+      return res.status(403).json({ message: "Access denied" });
+    }
+  
+    const totalSessions = await Session.countDocuments({ coach: req.user.id });
+    const completedSessions = await Session.countDocuments({
+      coach: req.user.id,
+      status: "completed",
+    });
+  
+    res.json({
+      totalSessions,
+      completedSessions,
+      completionRate: (completedSessions / totalSessions) * 100 || 0,
+    });
+  });
+  
