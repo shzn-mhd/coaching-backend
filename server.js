@@ -12,11 +12,11 @@ app.use(express.json());
 
 // Import routes
 const userRoutes = require("./routes/users");
-const analyticsRoutes = require("./routes/analytics"); // Import analytics routes
+const analyticsRoutes = require("./routes/analytics"); 
 
 // Use routes
 app.use("/api/users", userRoutes);
-app.use("/api/analytics", analyticsRoutes); // Register analytics routes
+app.use("/api/analytics", analyticsRoutes); 
 
 // MongoDB Connection
 mongoose
